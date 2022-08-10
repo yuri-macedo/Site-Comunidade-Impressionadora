@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+
+<div class="container mt-5 d-flex justify-content-center ">
+
+            <div class="card p-3 text-bg-light" style="width:1300px">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div >
+                            <div class="image pe-2">
+                                <img src="{{url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))}}" class=" rounded mx-auto d-block " width="200" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="ml-3 w-100">
+
+
+                            <form method="POST" action="" class="text-bg-light" enctype="multipart/form-data">
+                                {{form_editar_perfil.csrf_token}}
+                                <div class="form-group mb-2">
+                                    {{form_editar_perfil.username.label(class="form-control-label")}}
+                                    {% if form_editar_perfil.username.errors %}
+                                        {{form_editar_perfil.username(class="form-control is-invalid")}}
+                                        <div class="invalid-feedback">
+                                            {%for error in form_editar_perfil.username.errors%}
+                                            {{error}}
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                            {{form_editar_perfil.username(class="form-control")}}
+                                    {% endif %}
+
+                                </div>
+                                <div class="form-group mb-2">
+                                    {{form_editar_perfil.email.label(class="form-control-label")}}
+                                    {% if form_editar_perfil.email.errors %}
+                                        {{form_editar_perfil.email(class="form-control is-invalid")}}
+                                        <div class="invalid-feedback">
+                                            {%for error in form_editar_perfil.email.errors%}
+                                            {{error}}
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                            {{form_editar_perfil.email(class="form-control")}}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{form_editar_perfil.foto_perfil.label}}
+                                    {{ form_editar_perfil.foto_perfil(class="form-control-file") }}
+                                    {% if form_editar_perfil.foto_perfil.errors %}
+                                        {% for erro in form_editar_perfil.foto_perfil.errors %}
+                                            <span class="text-danger">{{ erro }}</span><br>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+                                    <div class="d-flex flex-column">
+
+                                        <span class="articles">Posts</span>
+                                        <span class="number1">{{current_user.posts|length}}</span>
+
+                                    </div>
+
+                                    <div class="d-flex flex-column">
+
+                                        <span class="rating">Cursos</span>
+                                        <span class="number3">
+                                            {% if current_user.cursos != "Não informado"%}
+                                                {{current_user.cursos.split(";")|length}}
+                                            {% else %}
+                                                {{0}}
+                                            {% endif %}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group mb-2 mt-2">
+
+                                    <h5> Cursos </h5>
+                                    <br>
+                                    {% for campo in form_editar_perfil %}
+                                        {% if "curso_" in campo.name %}
+
+                                            {{campo(class="form-check-input")}}
+                                            {{campo.label(class="form-check-label")}}
+                                            <br>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                                <div class="button mt-2 d-flex flex-row align-items-center">
+
+                                   {{form_editar_perfil.botao_editar_perfil(class="btn btn-sm btn-outline-dark w-100")}}
+                               </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+    </div>
+
+
+
+
+{% endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

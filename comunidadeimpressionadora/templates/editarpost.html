@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-3">
+
+        <div class="container mt-5 d-flex justify-content-center ">
+
+        <div class="card p-3 text-bg-light" style="width:1300px">
+            <div class="row">
+                <div class="col-sm-4">
+                         <div class="image pe-2">
+                            <img src="{{url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil))}}" class=" rounded mx-auto d-block " width="200" >
+                        </div>
+                        <div class="mt-2" style="text-align:center">
+                            <h3>{{post.autor.username}}</h3>
+                        </div>
+                            <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+                                <div class="d-flex flex-column">
+
+                                    <span class="articles">Posts</span>
+                                    <span class="number1">{{post.autor.posts|length}}</span>
+
+                                </div>
+
+                                <div class="d-flex flex-column">
+
+                                    <span class="rating">Cursos</span>
+                                    <span class="number3">
+                                        {% if post.autor.cursos != "Não informado"%}
+                                            {{post.autor.cursos.split(";")|length}}
+                                        {% else %}
+                                            {{0}}
+                                        {% endif %}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        <div class="row justify-content-center me-1 ms-1">
+                                {% for curso in post.autor.cursos.split(";") %}
+                                <button type="button" class="btn btn-dark mb-1" disabled>
+                                    {{curso}}
+                                </button>
+                                {% endfor %}
+                                <br>
+                        </div>
+
+
+
+
+
+                </div>
+                <div class="col-sm-8 border-start border-secondary">
+                    <div class="ml-3 w-100">
+                        <form method="POST" action="" class="text-bg-light" enctype="multipart/form-data">
+                            {{form_editar_post.csrf_token}}
+                            <div class="form-group mb-2">
+                                {{form_editar_post.titulo.label(class="form-control-label")}}
+                                {% if form_editar_post.titulo.errors %}
+                                    {{form_editar_post.titulo(class="form-control is-invalid")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form_editar_post.titulo.errors%}
+                                        {{error}}
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                        {{form_editar_post.titulo(class="form-control")}}
+                                {% endif %}
+
+                            </div>
+
+                            <div class="form-group mb-2">
+                                {{form_editar_post.corpo.label(class="form-control-label")}}
+                                {% if form_editar_post.corpo.errors %}
+                                    {{form_editar_post.corpo(class="form-control is-invalid")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form_editar_post.corpo.errors%}
+                                        {{error}}
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                        {{form_editar_post.corpo(class="form-control")}}
+                                {% endif %}
+
+                            </div>
+
+                            <div class="button mt-2 d-flex flex-row align-items-right">
+                               {{form_editar_post.botao_criar_post(class="btn btn-sm btn-outline-dark w-100")}}
+                            </div>
+
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+</div>
+
+
+{% endblock%}
+
+
+
+
+
